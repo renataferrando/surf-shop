@@ -1,0 +1,52 @@
+.form {
+  input {
+    padding: 8px;
+    border: solid 1px #333;
+    margin: 8px 0 0 0;
+    width: 98%;
+    &.--red {
+      border-bottom: solid 2.3px rgba(255, 0, 0, 0.767);
+    }
+  }
+  .label {
+    display: flex;
+    margin-top: 40px;
+  }
+  label {
+    display: block;
+    margin-top: 16px;
+    text-transform: uppercase;
+  }
+  span {
+    display: block;
+    position: relative;
+    i {
+      position: absolute;
+      right: 2%;
+      bottom: 7%;
+    }
+  }
+  .error-message {
+    color: red;
+    font-size: 12px;
+    margin-top: 8px;
+  }
+
+  .btn {
+    width: 160px;
+  }
+
+  .eye-off {
+    background-image: url("../../images/eye-off.svg");
+    width: 25px;
+    height: 25px;
+    background-repeat: no-repeat;
+    cursor: pointer;
+  }
+  .eye {
+    background-image: url("../../images/eye.svg");
+    width: 25px;
+    height: 25px;
+    background-repeat: no-repeat;
+  }
+}

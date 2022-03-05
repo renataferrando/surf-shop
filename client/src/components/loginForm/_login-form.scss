@@ -1,0 +1,28 @@
+.login-form {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 40px;
+  h4 {
+    text-align: center;
+    font-size: 22px;
+    margin-bottom: 0;
+    margin-top: 10px;
+  }
+  form {
+    label {
+      font-size: 14px;
+    }
+  }
+  .btn {
+    padding: 10px;
+  }
+  .form .label {
+    font-size: 14px;
+    margin-top: 10px;
+  }
+
+  p {
+    font-size: 12px;
+  }
+}

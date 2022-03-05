@@ -1,0 +1,14 @@
+.dialog-box {
+  position: absolute;
+}
+.dialog-box::before {
+  content: "";
+  position: absolute;
+  width: 0;
+  height: 0;
+  left: calc(50% - 1.37rem / 2 + 0.031rem);
+  top: -0.6rem;
+  border: 10px solid transparent;
+  border-bottom-color: #fff;
+  border-top-width: 0px;
+}

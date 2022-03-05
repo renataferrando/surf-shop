@@ -1,0 +1,29 @@
+.nav-items {
+  list-style: none;
+  display: inline-flex;
+  align-items: baseline;
+  &.--mobile {
+    display: flex;
+    flex-direction: column;
+    padding: 80px 35px;
+    a {
+      width: 100%;
+      border-bottom: solid 1px #ccc;
+      &::before {
+        content: "";
+        background-image: url("../../images/bag.svg");
+      }
+    }
+  }
+  a {
+    text-decoration: none;
+    padding: 10px;
+    color: black;
+    &:hover {
+      color: #ccc;
+    }
+    &:active {
+      color: black;
+    }
+  }
+}
