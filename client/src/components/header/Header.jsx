@@ -9,34 +9,31 @@ import Drawer from '../common/drawer/Drawer';
 import ModelessDialogBox from '../common/modelessDialogBox/ModelessDialogBox';
 import Button from '../common/button/Button'
 import { useNavigate } from "react-router-dom";
-import LoginForm from '../loginForm/LoginForm';
-import TestForm from '../loginForm/TestForm';
 import UseClickOutside from '../common/UseClickOutside';
 import Icon from '../common/icon/Icon';
+import LogIn from '../../pages/LogIn';
 
-const Header = ({user, cart, isLoggedIn }) => {
+const Header = ({user, cart }) => {
     const [height, width] = useWindowSize()
     const [menuOpen, setMenuOpen] = useState(false)
-    const [show, setShow] = useState()
+    const [showUserModal, setShowUserModal] = useState(true)
+    const [loginOpen, setLoginOpen] = useState()
+    const [isLoggedIn, setIsLoggedIn] = useState(false)
     const navigate = useNavigate()
-    const [loginOpen, setLoginOpen] = useState(false)
-
-
-
     const ref = useRef();
-    UseClickOutside(ref, () => setShow(!show));
-    const handleMouseEnter = e => {
-        setShow(true)
+ 
+    const toggleModal = () => {
+        setShowUserModal(!showUserModal)
     }
-    const handleClick = e => {
-        setShow(!show)
-        setLoginOpen(false)
+
+    UseClickOutside(ref, () => setShowUserModal(!showUserModal));
+    const handleMouseEnter = e => {
+        setShowUserModal(true)
     }
     const handleMouseLeave = e => {
         setTimeout(()=> {
-            setShow(false)
+            setShowUserModal(false)
         }, 300)
-        
     }
 
     const isMobile = width < 768
@@ -45,6 +42,14 @@ const Header = ({user, cart, isLoggedIn }) => {
         '--cart': cart,
         '--mobile': isMobile,
     })
+
+    useEffect(() => {
+        if (localStorage.getItem('userInfo') != null) {
+            setIsLoggedIn(isLoggedIn)
+        }
+    })
+    const userName = JSON.parse(localStorage.getItem('userInfo'))
+ 
     
     return (
        <> <nav className={headerClasses}>
@@ -56,38 +61,29 @@ const Header = ({user, cart, isLoggedIn }) => {
             {!isMobile && <NavLinks/>}
             <ul className='tools'>
                 <SearchBar iconName="search" isMobile={isMobile ? true : false}/>
-                <Icon name="user" onClick={handleClick} />
+                <Icon name="user" onClick={toggleModal} />
                 <Icon name="cart"/>
             </ul>
         </nav>
-        {show && 
-        <ModelessDialogBox isOpen={show} className="user-menu">
-        {!isLoggedIn ?
-        (<div onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave} className='log-in'>
+        {showUserModal && 
+        <ModelessDialogBox isOpen={showUserModal} className="user-menu">
+        <div onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave} className='log-in'>
+            {!isLoggedIn ? 
+            (<>
             <p>Who is there?</p>
-            <Button onClick={() => setLoginOpen(true) & (setShow(false))}className="user-btn"label="Log In"></Button>
+            <Button onClick={() => setLoginOpen(true) & (setShowUserModal(false))}className="user-btn"label="Log In"></Button>
             <p>Don't have an account?</p>
-            <Button onClick={() => navigate("/signup") & (setShow(false))} className="user-btn" label="Sign Up"></Button>
-        </div>) : (
-        <div>
-            <p>Hola </p>
-            <Button label="My Orders"/>
-            <Button label="My Account"/>
+            <Button onClick={() => navigate("/signup") & (setShowUserModal(false))} className="user-btn" label="Sign Up"></Button>
+            </>
+            ) : ( 
+            <>
+            <p className="hello" >Hi {userName.name}</p>
+            <a className="myaccount" onClick={() => setLoginOpen(true) & (setShowUserModal(false))}> My account</a>
+            <a className="logout" onClick={() => navigate("/signup") & (setShowUserModal(false))}>Log out</a>
+            </>)}
         </div>
-
-        )}
-        </ModelessDialogBox> } 
-        <Drawer 
-            className="login" 
-            position="center" 
-            width="50%" 
-            isOpen={loginOpen} 
-            onClose={()=>setLoginOpen(false)} 
-            positionCloseRight={true}
-            closeBtn={true}
-            >
-            <LoginForm closeModal={(handleClick)}/>
-        </Drawer>
+        </ModelessDialogBox> }
+        <LogIn loginOpen={loginOpen} onClose={() => setLoginOpen(false)}/>
         </>
     );
 };

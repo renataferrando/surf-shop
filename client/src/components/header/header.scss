@@ -40,7 +40,6 @@
 .user-menu {
   filter: drop-shadow(0 0.2rem 0.25rem rgba(0, 0, 0, 0.2));
   width: 200px;
-  height: 200px;
   background-color: #fff;
   top: 10%;
   right: 95px;
@@ -54,14 +53,31 @@
     padding: 20px 40px;
     p {
       font-size: 12px;
-      margin-bottom: 0;
+      margin: 0;
+    }
+    .hello {
+      font-size: 16px;
+      border-bottom: 1px solid #333;
+      width: 100%;
+      font-weight: bold;
+      padding-bottom: 10px;
+      text-align: center;
+    }
+    a {
+      margin: 10px 0 10px 0;
+      cursor: pointer;
+      &:hover {
+        color: #ccc;
+      }
     }
   }
 }
 .user-btn {
   font-size: 14px;
   padding: 8px;
+  margin: 8px 0 8px 0;
 }
+
 .login {
   .drawer-container.in.open & {
     width: 40%;

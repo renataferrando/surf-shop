@@ -8,10 +8,10 @@ import Loading from '../common/loading/Loading';
 import ErrorLogin from '../errorLogin/ErrorLogin';
 import Button from '../common/button/Button';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 
 
-
-const LoginForm = ({closeModal}) => {
+const LoginForm = ({ closeModal, onClickError, ...r }) => {
   const [showPass, setShow] = useState(true) 
   const [email, setEmail] = useState("") 
 
@@ -20,7 +20,7 @@ const LoginForm = ({closeModal}) => {
     resolver: yupResolver(loginSchema),
    
   });
-
+ 
   const [ error, setError ] = useState(false);
   const [loading, setLoading] = useState(false);
 
@@ -44,22 +44,17 @@ const LoginForm = ({closeModal}) => {
       console.log(data);
       localStorage.setItem('userInfo', JSON.stringify(data))
       setLoading(false);
-      closeModal()
     } catch (error) {
-      setError(error.response.data.message)
-      setLoading(false)
-      closeModal()
+      setError(true)
+      setLoading(false) 
     }
   }
-
-  const onError = (errors, e) => console.log(errors, e);
- 
 
     return (
       <>
       <div className='login-form'>
           <h4>LOG IN FOR BETTER EXPERIENCE</h4>
-          <form className="form" onSubmit={handleSubmit(onSubmit, onError)}>
+          <form className="form" onSubmit={handleSubmit(onSubmit)}>
                 <label>Email</label>
                 <input className= {errors.email && "--red"}
                 name="email" 
@@ -93,7 +88,14 @@ const LoginForm = ({closeModal}) => {
         
       </div>
       {loading && <Loading/>}
-      {error && <ErrorLogin/>}
+      {error && 
+      <ErrorLogin 
+        title="Invalid email or password" 
+        text="Not register?" 
+        link="Click here" 
+        onClickError={onClickError}
+        onClickTry={() => setError(false)}
+        /> }
       </>
     );
 

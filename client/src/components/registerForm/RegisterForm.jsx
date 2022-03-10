@@ -1,5 +1,5 @@
 import { useForm } from "react-hook-form";
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import schema from "./FormSchema"
 import Button from "../common/button/Button";
 import { yupResolver } from '@hookform/resolvers/yup'
@@ -7,8 +7,9 @@ import './_register-form.scss'
 import Checkmark from "../common/checkmark/Checkmark";
 import { useNavigate } from "react-router-dom";
 import SuccesRegistration from "../succesRegistration/SuccesRegistration";
+import ErrorLogin from "../errorLogin/ErrorLogin";
+import Drawer from "../common/drawer/Drawer";
 import axios from "axios";
-
 
 
 const Form = ({passIcon}) => {
@@ -19,10 +20,39 @@ const Form = ({passIcon}) => {
     mode: "onChange",
     resolver: yupResolver(schema)
   });
-  const onSubmit = (data) => {
-      console.log(data)
-      setSuccess(!success)
 
+  const [ error, setError ] = useState(false);
+
+
+  const onSubmit = async (data) => {
+      console.log(data)
+
+      const email = data.email; 
+      const password = data.password;
+      const name = data.firstname;
+     
+      try {
+        const config = {
+          headers: {
+            "Content-type": "application/json"
+          },
+        };
+      
+       const { data } = await axios.post('/api/users', {
+        name,  
+        email, 
+        password
+        }, 
+        config
+        );
+        console.log(data);
+        localStorage.setItem('userInfo', JSON.stringify(data))
+        
+        setSuccess(true)
+      } catch (error) {
+        setError(error.response.data.message)
+        
+      }
   };
   
   return (  
@@ -99,6 +129,16 @@ const Form = ({passIcon}) => {
     {success && 
       <SuccesRegistration isOpen={success}  onClose={()=>setSuccess(false) & navigate("/")} />
     }
+      {error && 
+      <Drawer isOpen={error} position="center" width="50%" className="login" onClose={()=> setError(false)}>
+        
+        <ErrorLogin 
+          title={error} 
+          text="Forgot your password?" 
+          link="Click here" 
+          onClickTry={()=>setError(false)}
+        />
+      </Drawer> }
     </>
   );
 };
