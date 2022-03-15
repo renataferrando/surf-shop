@@ -50,7 +50,7 @@ const Drawer = forwardRef(
   useEffect(() => {
   const updatePageScroll = () => {
         if (isOpen) {
-        bodyRef.current.style.overflow = 'hidden'; //cambiar a hidden en caso de no querer que mueva
+        bodyRef.current.style.overflow = 'scroll'; //cambiar a hidden en caso de no querer que mueva
         } else {
         bodyRef.current.style.overflow = '';
         }

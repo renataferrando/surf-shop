@@ -24,7 +24,7 @@ const LogIn = ({loginOpen, onClose}) => {
             positionCloseRight={true}
             closeBtn={true}
             >
-            <LoginForm onClickError={closeLoginAfterError} />
+            <LoginForm closeModal={onClose} onClickError={closeLoginAfterError} />
         </Drawer>
     );
 };

@@ -1,7 +1,7 @@
 import './header.scss'
 import React, { useState, useEffect, useRef } from 'react';
 import classNames from 'classnames'
-import logo from '../../images/logo.png'
+import logo from '../../images/logo-surf.png'
 import SearchBar from '../common/searchBar/SearchBar'
 import NavLinks from './NavLinks';
 import useWindowSize from '../../js/UseWindowSize';
@@ -12,13 +12,16 @@ import { useNavigate } from "react-router-dom";
 import UseClickOutside from '../common/UseClickOutside';
 import Icon from '../common/icon/Icon';
 import LogIn from '../../pages/LogIn';
+import Cart from '../cart/Cart';
+
 
 const Header = ({user, cart }) => {
     const [height, width] = useWindowSize()
     const [menuOpen, setMenuOpen] = useState(false)
-    const [showUserModal, setShowUserModal] = useState(true)
+    const [showUserModal, setShowUserModal] = useState(false)
     const [loginOpen, setLoginOpen] = useState()
     const [isLoggedIn, setIsLoggedIn] = useState(false)
+    const [ cartOpen, setCartOpen ] = useState()
     const navigate = useNavigate()
     const ref = useRef();
  
@@ -45,11 +48,15 @@ const Header = ({user, cart }) => {
 
     useEffect(() => {
         if (localStorage.getItem('userInfo') != null) {
-            setIsLoggedIn(isLoggedIn)
+            setIsLoggedIn(true)
         }
-    })
+        else {
+            setIsLoggedIn(false)
+        }
+    });
+
     const userName = JSON.parse(localStorage.getItem('userInfo'))
- 
+    
     
     return (
        <> <nav className={headerClasses}>
@@ -57,12 +64,12 @@ const Header = ({user, cart }) => {
             <Drawer position="left" width="mobile" isOpen={menuOpen} onClose={() => setMenuOpen(false)} closeBtn={true} >
                 <NavLinks mobile={true}/>
            </Drawer>
-           <img className = "logo"src={ logo } ></img>
+           <img className="logo"src={ logo } onClick={()=> navigate("/")} />
             {!isMobile && <NavLinks/>}
             <ul className='tools'>
                 <SearchBar iconName="search" isMobile={isMobile ? true : false}/>
-                <Icon name="user" onClick={toggleModal} />
-                <Icon name="cart"/>
+                <Icon name={!isLoggedIn ? "user" : "userLogged"} onClick={toggleModal} />
+                <Icon name="cart" onClick={()=> {setCartOpen(true)}}/>
             </ul>
         </nav>
         {showUserModal && 
@@ -78,12 +85,13 @@ const Header = ({user, cart }) => {
             ) : ( 
             <>
             <p className="hello" >Hi {userName.name}</p>
-            <a className="myaccount" onClick={() => setLoginOpen(true) & (setShowUserModal(false))}> My account</a>
-            <a className="logout" onClick={() => navigate("/signup") & (setShowUserModal(false))}>Log out</a>
+            <a className="myaccount" onClick={() => navigate("/myaccount") & (setShowUserModal(false))}> My account</a>
+            <a className="logout" onClick={() => localStorage.removeItem("userInfo") & (setShowUserModal(false))}>Log out</a>
             </>)}
         </div>
         </ModelessDialogBox> }
         <LogIn loginOpen={loginOpen} onClose={() => setLoginOpen(false)}/>
+        <Cart cartOpen={cartOpen} cartClose={()=> setCartOpen(false)}/>
         </>
     );
 };

@@ -19,7 +19,7 @@ const authUser = asyncHandler(async (req, res) => {
 });
 
 const registerUser = asyncHandler(async (req, res) => {
-  const { name, email, password } = req.body;
+  const { name, email, password, address, city, date } = req.body;
 
   const userExist = await User.findOne({ email });
   if (userExist) {
@@ -31,6 +31,9 @@ const registerUser = asyncHandler(async (req, res) => {
     name,
     email,
     password,
+    address,
+    date,
+    city,
   });
 
   if (User) {
@@ -38,6 +41,9 @@ const registerUser = asyncHandler(async (req, res) => {
       _id: user._id,
       name: user.name,
       email: user.email,
+      address: user.address,
+      date: user.date,
+      city: user.city,
       token: generateToken(user._id),
     });
   } else {

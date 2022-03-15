@@ -9,7 +9,7 @@ const schema = yup.object().shape({
     .string()
     .matches(/^([^0-9]*)$/, "Lastname should not contain numbers")
     .required("Lastname is required"),
-  birth: yup
+  date: yup
     .date()
     .nullable()
     .transform((curr, orig) => (orig === "" ? null : curr))

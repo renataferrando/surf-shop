@@ -1,0 +1,24 @@
+.myaccount-page {
+  background-color: #f7f7f7;
+  display: flex;
+  justify-content: center;
+  .wrapper {
+    justify-content: space-around;
+    text-align: center;
+    width: 1200px;
+    display: grid;
+    grid-template-columns: 500px 1fr;
+    padding: 60px 40px;
+    .left {
+      background-color: #fff;
+      padding: 20px;
+    }
+  }
+  @media only screen and (max-width: 768px) {
+    flex-direction: column;
+    .wrapper {
+      width: auto;
+      grid-template-columns: auto;
+    }
+  }
+}

@@ -20,6 +20,7 @@
 
   .logo {
     width: 100px;
+    cursor: pointer;
   }
   .tools {
     list-style: none;
@@ -104,8 +105,11 @@
     }
   }
 }
-@media only screen and (max-width: 378px) {
+@media only screen and (max-width: 395px) {
   .user-menu {
-    right: 27px;
+    right: 16px;
+  }
+  .tools > .icon {
+    margin: 5px;
   }
 }

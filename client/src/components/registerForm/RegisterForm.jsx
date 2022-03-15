@@ -30,6 +30,9 @@ const Form = ({passIcon}) => {
       const email = data.email; 
       const password = data.password;
       const name = data.firstname;
+      const address = data.address;
+      const city = data.city;
+      const date = data.date
      
       try {
         const config = {
@@ -41,7 +44,10 @@ const Form = ({passIcon}) => {
        const { data } = await axios.post('/api/users', {
         name,  
         email, 
-        password
+        password, 
+        address, 
+        city, 
+        date,
         }, 
         config
         );
@@ -57,7 +63,7 @@ const Form = ({passIcon}) => {
   
   return (  
   <>
-    <form className="form" onSubmit={handleSubmit(onSubmit)}>
+    <form className="register-form" onSubmit={handleSubmit(onSubmit)}>
       <label>Firstname</label>
       <input className= {errors.firstname && "--red"}
        name="firstname"
@@ -75,9 +81,9 @@ const Form = ({passIcon}) => {
 
       <label>Date of birth</label>
       <input className= {errors.birth && "--red"}
-      name="birth" 
+      name="date" 
       type="date" 
-      {...register("birth")} 
+      {...register("date")} 
       />
       <p className="error-message">{errors.birth?.message}</p>
 

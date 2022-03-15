@@ -8,7 +8,7 @@ import Loading from '../common/loading/Loading';
 import ErrorLogin from '../errorLogin/ErrorLogin';
 import Button from '../common/button/Button';
 import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
+
 
 
 const LoginForm = ({ closeModal, onClickError, ...r }) => {
@@ -44,6 +44,8 @@ const LoginForm = ({ closeModal, onClickError, ...r }) => {
       console.log(data);
       localStorage.setItem('userInfo', JSON.stringify(data))
       setLoading(false);
+      closeModal()
+
     } catch (error) {
       setError(true)
       setLoading(false) 
