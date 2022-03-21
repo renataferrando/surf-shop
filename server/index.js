@@ -3,8 +3,9 @@ const PORT = process.env.PORT || 3001;
 const app = express();
 const dotenv = require("dotenv");
 const userRoutes = require("./routes/usersRoutes");
+const productsRoutes = require("./routes/productsRoutes");
 const connectDB = require("./config/db");
-const { notFound, errorHandler } = require("./errorHandlers/errorHandler");
+const { notFound, errorHandler } = require("./middlewares/errorHandler");
 
 dotenv.config();
 connectDB();
@@ -15,6 +16,7 @@ app.get("/", (req, res) => {
 });
 
 app.use("/api/users", userRoutes);
+app.use("/api/products/accesories/leashes", productsRoutes);
 
 // --------------------------deployment------------------------------
 

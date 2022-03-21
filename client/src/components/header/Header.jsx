@@ -4,21 +4,21 @@ import classNames from 'classnames'
 import logo from '../../images/logo-surf.png'
 import SearchBar from '../common/searchBar/SearchBar'
 import NavLinks from './NavLinks';
-import useWindowSize from '../../js/UseWindowSize';
+import useWindowSize from '../common/hooks/useWindowSize';
 import Drawer from '../common/drawer/Drawer';
 import ModelessDialogBox from '../common/modelessDialogBox/ModelessDialogBox';
 import Button from '../common/button/Button'
 import { useNavigate } from "react-router-dom";
-import UseClickOutside from '../common/UseClickOutside';
+import useClickOutside from '../common/hooks/useClickOutside';
 import Icon from '../common/icon/Icon';
 import LogIn from '../../pages/LogIn';
 import Cart from '../cart/Cart';
 
 
-const Header = ({user, cart }) => {
+const Header = ({ user, cart }) => {
     const [height, width] = useWindowSize()
     const [menuOpen, setMenuOpen] = useState(false)
-    const [showUserModal, setShowUserModal] = useState(false)
+    const [showUserModal, setShowUserModal] = useState(true)
     const [loginOpen, setLoginOpen] = useState()
     const [isLoggedIn, setIsLoggedIn] = useState(false)
     const [ cartOpen, setCartOpen ] = useState()
@@ -29,7 +29,7 @@ const Header = ({user, cart }) => {
         setShowUserModal(!showUserModal)
     }
 
-    UseClickOutside(ref, () => setShowUserModal(!showUserModal));
+    useClickOutside(ref, () => setShowUserModal(!showUserModal));
     const handleMouseEnter = e => {
         setShowUserModal(true)
     }
@@ -73,8 +73,8 @@ const Header = ({user, cart }) => {
             </ul>
         </nav>
         {showUserModal && 
-        <ModelessDialogBox isOpen={showUserModal} className="user-menu">
-        <div onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave} className='log-in'>
+        <ModelessDialogBox isOpen={showUserModal} className="user-menu" >
+        <div className='log-in'>
             {!isLoggedIn ? 
             (<>
             <p>Who is there?</p>
