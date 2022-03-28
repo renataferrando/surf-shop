@@ -2,10 +2,12 @@ import React from 'react';
 import './_products-layout.scss'
 import Navigation from '../common/navigation/Navigation';
 
-const ProductsLayout = ({ navTitle, children }) => {
+const ProductsLayout = ({ children, filters }) => {
+
+
     return (
         <div className='product-layout'>
-            <Navigation title={navTitle}/>
+                <Navigation filters={filters} />
             <div className='products'>
                 { children }
             </div>

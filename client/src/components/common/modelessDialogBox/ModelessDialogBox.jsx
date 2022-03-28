@@ -1,22 +1,37 @@
-import React, { forwardRef, useRef, useEffect } from 'react';
+import React, { useRef } from 'react';
 import './_modeless-dialog-box.scss'
 import classNames from 'classnames';
 import ReactDOM from 'react-dom';
-import UseClickOutside from '../UseClickOutside';
+import useClickOutside from '../hooks/useClickOutside';
 
-const ModelessDialogBox = forwardRef (({className, children, isOpen }, ref) => {
-    const classes = classNames ('dialog-box', className, )
-    const body = document.querySelector('body');
-
-
+const ModelessDialogBox = ({ className, children, isOpen, onClose }) => {
+    const classes = classNames ('dialog-box', className)
+    const ref = useRef()
+    useClickOutside(ref, () => onClose());
+    const handleMouseEnter = e => {
+        isOpen = true
+    }
+    const handleMouseLeave = e => {
+        setTimeout(()=> {
+            onClose()
+        }, 300)
+    }
+    
     return ReactDOM.createPortal (
-        <>{isOpen &&
-            <div className={classes}>
+        <>
+            <div 
+                ref={ref} 
+                aria-hidden= {isOpen ? "false" : "true"} 
+                className={classes} 
+                onMouseEnter={handleMouseEnter} 
+                onMouseLeave={handleMouseLeave} 
+                onClose={onClose}
+                >
                 {children}
-            </div>}
+            </div>
         </>,
         document.body,
     );
-});
+};
 
 export default ModelessDialogBox;

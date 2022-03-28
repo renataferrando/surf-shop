@@ -28,6 +28,9 @@ const productSchema = mongoose.Schema({
   secondImageUrl: {
     type: String,
   },
+  size: {
+    type: Number,
+  },
 });
 
 const Product = mongoose.model("product", productSchema);

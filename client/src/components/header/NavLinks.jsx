@@ -7,10 +7,11 @@ const NavLinks = ({className, mobile}) => {
     const classes = classNames ('nav-items', className, {
         '--mobile': mobile
     });
+    
     const navigate = useNavigate()
     return (
         <li className={classes}>
-            <a href="">WETSUITS</a>
+            <a href="" >WETSUITS</a>
             <a href="">BOARDS</a>
             <a href="" onClick={()=> navigate("/accesories")}>ACCESORIES</a>
             <a href="">BRANDS</a>

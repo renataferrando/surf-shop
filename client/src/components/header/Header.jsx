@@ -9,42 +9,28 @@ import Drawer from '../common/drawer/Drawer';
 import ModelessDialogBox from '../common/modelessDialogBox/ModelessDialogBox';
 import Button from '../common/button/Button'
 import { useNavigate } from "react-router-dom";
-import useClickOutside from '../common/hooks/useClickOutside';
 import Icon from '../common/icon/Icon';
 import LogIn from '../../pages/LogIn';
 import Cart from '../cart/Cart';
 
 
-const Header = ({ user, cart }) => {
+const Header = ({user, cart }) => {
     const [height, width] = useWindowSize()
     const [menuOpen, setMenuOpen] = useState(false)
-    const [showUserModal, setShowUserModal] = useState(true)
+    const [showUserModal, setShowUserModal] = useState()
     const [loginOpen, setLoginOpen] = useState()
     const [isLoggedIn, setIsLoggedIn] = useState(false)
     const [ cartOpen, setCartOpen ] = useState()
     const navigate = useNavigate()
-    const ref = useRef();
- 
-    const toggleModal = () => {
-        setShowUserModal(!showUserModal)
-    }
-
-    useClickOutside(ref, () => setShowUserModal(!showUserModal));
-    const handleMouseEnter = e => {
-        setShowUserModal(true)
-    }
-    const handleMouseLeave = e => {
-        setTimeout(()=> {
-            setShowUserModal(false)
-        }, 300)
-    }
-
+    
     const isMobile = width < 768
     const headerClasses = classNames('header', {
         '--user': user,
         '--cart': cart,
         '--mobile': isMobile,
     })
+
+ 
 
     useEffect(() => {
         if (localStorage.getItem('userInfo') != null) {
@@ -55,8 +41,8 @@ const Header = ({ user, cart }) => {
         }
     });
 
+   
     const userName = JSON.parse(localStorage.getItem('userInfo'))
-    
     
     return (
        <> <nav className={headerClasses}>
@@ -68,12 +54,12 @@ const Header = ({ user, cart }) => {
             {!isMobile && <NavLinks/>}
             <ul className='tools'>
                 <SearchBar iconName="search" isMobile={isMobile ? true : false}/>
-                <Icon name={!isLoggedIn ? "user" : "userLogged"} onClick={toggleModal} />
+                <Icon name={!isLoggedIn ? "user" : "userLogged"} onClick={()=> setShowUserModal(true)}/>
                 <Icon name="cart" onClick={()=> {setCartOpen(true)}}/>
             </ul>
         </nav>
-        {showUserModal && 
-        <ModelessDialogBox isOpen={showUserModal} className="user-menu" >
+        {showUserModal &&
+        <ModelessDialogBox isOpen={showUserModal} className="user-menu" onClose={()=> setShowUserModal(false)} >
         <div className='log-in'>
             {!isLoggedIn ? 
             (<>
@@ -89,7 +75,7 @@ const Header = ({ user, cart }) => {
             <a className="logout" onClick={() => localStorage.removeItem("userInfo") & (setShowUserModal(false))}>Log out</a>
             </>)}
         </div>
-        </ModelessDialogBox> }
+        </ModelessDialogBox>}
         <LogIn loginOpen={loginOpen} onClose={() => setLoginOpen(false)}/>
         <Cart cartOpen={cartOpen} cartClose={()=> setCartOpen(false)}/>
         </>

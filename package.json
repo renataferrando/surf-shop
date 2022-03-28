@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "start": "nodemon server/index.js",
-    "dev": "nodemon server"
+    "dev": "nodemon server",
+    "data:import": "node server/dataScript.js"
   },
   "keywords": [],
   "author": "",

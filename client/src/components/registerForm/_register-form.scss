@@ -7,6 +7,9 @@
     &.--red {
       border-bottom: solid 2.3px rgba(255, 0, 0, 0.767);
     }
+    &:focus {
+      outline: none;
+    }
   }
   .label {
     display: flex;
@@ -42,11 +45,13 @@
     height: 25px;
     background-repeat: no-repeat;
     cursor: pointer;
+    margin-right: 10px;
   }
   .eye {
     background-image: url("../../images/eye.svg");
     width: 25px;
     height: 25px;
     background-repeat: no-repeat;
+    margin-right: 10px;
   }
 }

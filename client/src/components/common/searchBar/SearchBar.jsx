@@ -1,13 +1,12 @@
-import React, {useState, useEffect, useRef} from 'react';
-import classNames from 'classnames';
+import React, {useState, useRef} from 'react';
 import './search-bar.scss'
-import UseClickOutside from '../UseClickOutside';
+import useClickOutside from '../hooks/useClickOutside';
 import Icon from '../icon/Icon';
 
 const SearchBar = ({isMobile, iconName}) => {
     const [search, setSearch] = useState()
     const ref = useRef();
-    UseClickOutside(ref, () => setSearch(false));
+    useClickOutside(ref, () => setSearch(false));
 
     return (
         <>

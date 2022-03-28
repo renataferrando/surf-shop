@@ -1,7 +1,7 @@
 import React from 'react';
 import './_cart.scss';
 import Drawer from '../common/drawer/Drawer';
-import useWindowSize from '../../js/UseWindowSize';
+import useWindowSize from '../common/hooks/useWindowSize';
 
 const Cart = ({ cartOpen, cartClose }) => {
     const [height, width] = useWindowSize()

@@ -1,0 +1,33 @@
+.product-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  cursor: pointer;
+  .title {
+    padding: 0 15px;
+    text-align: center;
+  }
+  .description-box {
+    overflow: hidden;
+    color: rgba(0, 0, 0, 0.3);
+    max-height: 48px;
+    &.--active {
+      max-height: 100%;
+      color: #000;
+      transition: color 0.15s ease-in-out;
+      transition: max-height 0.15s ease-in-out;
+    }
+  }
+  &:hover {
+    opacity: 80%;
+  }
+  .description {
+    font-size: 11px;
+    text-align: center;
+    padding: 0 10px;
+  }
+  .image {
+    height: 150px;
+  }
+}

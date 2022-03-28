@@ -3,31 +3,32 @@ import './_navigation.scss'
 import classNames from 'classnames';
 import Icon from '../icon/Icon';
 
-const Navigation = ({className, title, hasList}) => {
+const Navigation = ({ className, filters }) => {
     const classes = classNames ('navigation', className)
     const [ listOpen, setListOpen ] = useState()
-    
-    console.log(listOpen)
-
-    hasList=true
-
+  
     const handleClick = () => {
-        if (hasList === true ) {
-            setListOpen(!listOpen)
-        }
+        setListOpen(!listOpen)
     }
-
+ 
     return (
         <div className={classes}>
-            <div className='item'>
-                <h4>{title}</h4>
-                <Icon name= {listOpen ? "minus" : "plus"} className={hasList ? "--active" : ""} onClick={handleClick}/>
-            </div>
-                <ul className={listOpen ? "list --open" : "list"}>
-                    <a href="">Creature</a>
-                    <a href="">Free Life</a>
-                    <a href="">Shock n' blue</a>
-                </ul>            
+            { filters.map(( { id, name, items } ) => ( 
+                  <div key={id} className='item'>
+                      <div className='title'>
+                          <h4>{name}</h4>
+                          <Icon 
+                            name={listOpen && items ? "minus" : "plus"} 
+                            className={!items && "--disabled"} 
+                            onClick={ items && (handleClick) }
+                          />
+                      </div>
+                      {items && <ul className={listOpen ? "list --open" : "list"}>
+                        {items.map(({item, i} ) => (<li key={i}> {[item]} </li>))}
+                      </ul>}
+                  </div>
+            ))
+            }
         </div>
     );
 };

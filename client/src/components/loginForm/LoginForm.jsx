@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import './_login-form.scss'
 import { useForm } from "react-hook-form";
 import loginSchema from "../loginForm/loginFormSchema";
@@ -13,14 +13,13 @@ import axios from 'axios';
 
 const LoginForm = ({ closeModal, onClickError, ...r }) => {
   const [showPass, setShow] = useState(true) 
-  const [email, setEmail] = useState("") 
 
   const { register, handleSubmit, formState: { errors } } = useForm({
     mode: "onChange",
     resolver: yupResolver(loginSchema),
    
   });
- 
+
   const [ error, setError ] = useState(false);
   const [loading, setLoading] = useState(false);
 
@@ -37,7 +36,7 @@ const LoginForm = ({ closeModal, onClickError, ...r }) => {
       setLoading(true)
      const { data } = await axios.post('/api/users/login', {
         email, 
-        password
+        password,
       }, 
       config
       );
@@ -61,10 +60,7 @@ const LoginForm = ({ closeModal, onClickError, ...r }) => {
                 <input className= {errors.email && "--red"}
                 name="email" 
                 type="email"
-                value={email} 
-                {...register("email")}
-                onChange={(e)=> setEmail(e.target.value)}
-                
+                {...register("email")}                
                 />
                 <p className="error-message">{errors.email?.message}</p>
 
