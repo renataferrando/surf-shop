@@ -7,6 +7,7 @@ import Layout from "./components/layout/Layout";
 import MyAccount from "./pages/MyAccount";
 import Home from "./pages/Home";
 import Accesories from "./pages/Accesories";
+import SuperHeros from "./pages/SuperHeros";
 
 function App() {
   return (
@@ -19,6 +20,7 @@ function App() {
             <Route exact path="/signup" element={<SignUp />} />
             <Route exact path="/myaccount" element={<MyAccount />} />
             <Route exact path="/accesories" element={<Accesories />} />
+            <Route exact path="/super-heroes" element={<SuperHeros />} />
           </Routes>
         </Layout>
       </BrowserRouter>

@@ -11,4 +11,18 @@ const getProductsById = asyncHandler(async (req, res) => {
   res.json(product);
 });
 
-module.exports = { getProducts, getProductsById };
+const getProductsByGender = asyncHandler(async (req, res) => {
+  const gender = await Product.find({ gender: req.params.gender });
+  res.json(gender);
+});
+const getProductsByBrand = asyncHandler(async (req, res) => {
+  const brand = await Product.find({ brand: req.params.brand });
+  res.json(brand);
+});
+
+module.exports = {
+  getProducts,
+  getProductsById,
+  getProductsByGender,
+  getProductsByBrand,
+};

@@ -4,6 +4,7 @@ const app = express();
 const dotenv = require("dotenv");
 const userRoutes = require("./routes/usersRoutes");
 const productsRoutes = require("./routes/productsRoutes");
+const categoriesRoutes = require("./routes/categoriesRoutes");
 const connectDB = require("./config/db");
 const { notFound, errorHandler } = require("./middlewares/errorHandler");
 
@@ -16,9 +17,8 @@ app.get("/", (req, res) => {
 });
 
 app.use("/api/users", userRoutes);
-app.use("/api/products/accesories/leashes", productsRoutes);
-
-// --------------------------deployment------------------------------
+app.use("/api/products", productsRoutes);
+app.use("/api/categories", categoriesRoutes);
 
 app.use(notFound);
 app.use(errorHandler);

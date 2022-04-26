@@ -28,8 +28,19 @@ const productSchema = mongoose.Schema({
   secondImageUrl: {
     type: String,
   },
-  size: {
-    type: Number,
+  size: [
+    {
+      type: Number,
+    },
+  ],
+  category: {
+    type: String,
+  },
+  subcategory: {
+    type: String,
+  },
+  gender: {
+    type: String,
   },
 });
 
