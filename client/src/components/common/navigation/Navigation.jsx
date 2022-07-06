@@ -1,37 +1,30 @@
-import React, { useState } from "react";
+import React from "react";
 import "./_navigation.scss";
 import classNames from "classnames";
-import Icon from "../icon/Icon";
 
-const Navigation = ({ className, filters, items }) => {
+const Navigation = ({ className, title, items, checkboxOnChange, checked }) => {
   const classes = classNames("navigation", className);
-  const [listOpen, setListOpen] = useState();
-
-  const handleClick = () => {
-    setListOpen(!listOpen);
-  };
 
   return (
     <div className={classes}>
-      {filters.map((index, name) => (
-        <div key={index} className="item">
-          <div className="title">
-            <h4>{name}</h4>
-            <Icon
-              name={listOpen && items ? "minus" : "plus"}
-              className={!items && "--disabled"}
-              onClick={items && handleClick}
-            />
-          </div>
-          {items && (
-            <ul className={listOpen ? "list --open" : "list"}>
-              {items.map(({ item, i }) => (
-                <li key={i}> {[item]} </li>
-              ))}
-            </ul>
-          )}
+      <div className="item">
+        <div className="title">
+          <h4>{title}</h4>
         </div>
-      ))}
+        <ul>
+          {items.map((item, id) => (
+            <label key={id} className="filter-checkbox">
+              <input
+                type="checkbox"
+                value={item}
+                onChange={checkboxOnChange}
+                checked={checked}
+              />
+              {item}
+            </label>
+          ))}
+        </ul>
+      </div>
     </div>
   );
 };

@@ -14,8 +14,8 @@
 /* Create a custom checkbox */
 .checkmark {
   position: relative;
-  height: 16px;
-  width: 16px;
+  height: 14px;
+  width: 14px;
   margin-right: 5px;
   border: 1px solid black;
   order: -1;
@@ -40,11 +40,13 @@
 
 /* Style the checkmark/indicator */
 .checkmark:after {
-  left: 5px;
-  top: 1px;
-  width: 4px;
-  height: 8px;
+  left: 4px;
+  top: 0.5px;
+  width: 3px;
+  height: 7.5px;
   border: solid white;
   border-width: 0 2px 2px 0;
   transform: rotate(41deg);
 }
+
+

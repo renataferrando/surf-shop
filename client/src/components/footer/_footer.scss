@@ -57,6 +57,10 @@
         margin: 0 10px;
         font-size: 20px;
         cursor: pointer;
+        &:hover{
+          color: rgb(186, 183, 183);
+          opacity: .8;
+        }
       }
     }
   }

@@ -1,58 +1,60 @@
-import React, { useEffect, useState } from "react";
+import React, { useState, useContext, useEffect } from "react";
+import { ApiContext } from "../context/apiContext";
 import ProductsLayout from "../components/productsLayout/ProductsLayout";
 import ProductCard from "../components/common/productCard/ProductCard";
-import "./_accesories.scss";
-import useAxiosFetch from "../components/common/hooks/useAxiosFetch";
 import Loading from "../components/common/loading/Loading";
-import Navigation from "../components/common/navigation/Navigation";
+import Filters from "../components/filters/Filters";
+import { useAccesories } from "../service/getAccesories";
+import "./_accesories.scss";
 
 const Accesories = () => {
-  const { data, fetchError, isLoading } =
-    useAxiosFetch(`/api/categories/accesories
-  `);
+  const [state, dispatch, searchParams, setSearchParams] =
+    useContext(ApiContext);
+  const { loading } = useAccesories();
+  const [noResults, setNoResults] = useState(false);
+
   useEffect(() => {
-    console.log(data);
-  }, [data]);
-
-  const [subcat, setSubcat] = useState("");
-  const filters = data.map((item) => item.subcategory);
-
-  // const subcategory = filters.map((item) => set);
-
-  // const leashes = data.filter((item) => item.category === "leashes");
-  // const brands = leashes.map((item) => item.brand);
-  const subcats = filters.reduce((acc, item) => {
-    if (!acc.includes(item)) {
-      acc.push(item);
+    if (state.products.length === 0) {
+      setNoResults(true);
+    } else {
+      setNoResults(false);
     }
-    return acc;
-  }, []);
+  }, [state.products]);
 
-  console.log(subcats);
+  const handleDeleteSearch = () => {
+    setSearchParams();
+  };
 
   return (
     <div className="accesories-page">
       <h1>Accesories</h1>
-      <div>
-        <p>{subcats}</p>
-        <Navigation filters={subcats} />
-        <ProductsLayout>
-          {isLoading && <Loading />}
-          {data.map((data) => (
-            <ProductCard
-              key={data._id}
-              title={data.name}
-              firstImage={data.firstImageUrl}
-              secondImage={data.secondImageUrl}
-              price={data.price}
-              description={data.description}
-            />
-          ))}
-        </ProductsLayout>
+      <div className="wrapper">
+        <Filters data={state.products} />
+        <div className="products">
+          <ProductsLayout>
+            {loading && <Loading />}
+            {noResults && (
+              <div>
+                No results where found, try a diffrent search,{" "}
+                <span className="go-back" onClick={handleDeleteSearch}>
+                  go back
+                </span>
+              </div>
+            )}
+            {state.products.map((data) => (
+              <ProductCard
+                key={data._id}
+                title={data.name}
+                firstImage={data.firstImageUrl}
+                secondImage={data.secondImageUrl}
+                price={data.price}
+                brand={data.brand}
+                category={data.subcategory}
+              />
+            ))}
+          </ProductsLayout>
+        </div>
       </div>
-      {data.map(({ brand }) => (
-        <p>{brand}</p>
-      ))}
     </div>
   );
 };

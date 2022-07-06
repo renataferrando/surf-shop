@@ -23,7 +23,6 @@ const productSchema = mongoose.Schema({
   },
   firstImageUrl: {
     type: String,
-    required: true,
   },
   secondImageUrl: {
     type: String,
