@@ -1,27 +1,30 @@
+const PORT = process.env.PORT;
+const HOST = process.env.HOST;
+
 const mongoose = require("mongoose");
 
 const productSchema = mongoose.Schema({
-  name: {
+  productName: {
     type: String,
-    required: true,
+    // required: true,
   },
   brand: {
     type: String,
-    required: true,
+    // required: true,
   },
   description: {
     type: String,
-    required: true,
+    // required: true,
   },
   price: {
     type: Number,
-    required: true,
+    // required: true,
   },
   countInStock: {
     type: Number,
-    required: true,
+    // required: true,
   },
-  firstImageUrl: {
+  firstImage: {
     type: String,
   },
   secondImageUrl: {

@@ -1,41 +1,60 @@
 export const initialState = {
-  priceHighToLow: false,
-  priceLowToHigh: false,
-  products: [],
+  loading: false,
+  accesories: [],
+  wetsuits: [],
+  accesoriesBrands: [],
+  accesoriesSubcategories: [],
+  error: null,
 };
 
 export const productsReducer = (state, action) => {
   switch (action.type) {
-    case "PRODUCTS":
+    case "GET_ACCESORIES_SUCCESS":
       return {
         ...state,
-        priceHighToLow: false,
-        priceLowToHigh: false,
-        products: action.payload,
+        loading: false,
+        accesories: action.payload,
+        error: "",
       };
 
-    case "HIGH_TO_LOW":
+    case "GET_ACCESORIES_FAILURE":
       return {
         ...state,
-        priceHighToLow: true,
-        priceLowToHigh: false,
-        products: state.products.sort((a, b) => (a.price > b.price ? -1 : 1)),
+        loading: false,
+        accesories: [],
+        error: action.payload.error,
       };
-    case "LOW_TO_HIGH":
+    case "GET_WETSUITS_SUCCESS":
       return {
         ...state,
-        priceHighToLow: false,
-        priceLowToHigh: true,
-        products: state.products.sort((a, b) => (a.price > b.price ? 1 : -1)),
+        loading: false,
+        wetsuits: action.payload,
+        error: "",
       };
 
-    case "RESET":
-      return action.payload;
-
+    case "GET_WETSUITS_FAILURE":
+      return {
+        ...state,
+        loading: false,
+        wetsuits: [],
+        error: action.payload.error,
+      };
+    case "GET_ACCESORIES_BRANDS":
+      return {
+        ...state,
+        accesoriesBrands: action.payload,
+      };
+    case "GET_ACCESORIES_SUBCATEGORIES":
+      return {
+        ...state,
+        accesoriesSubcategories: action.payload,
+      };
+    case "GET_WETSUITS_BRANDS":
+      return {
+        ...state,
+        wetsuits: action.payload.data,
+      };
     default:
-      return {
-        ...state,
-        products: action.payload,
-      };
+      return { ...state };
   }
 };

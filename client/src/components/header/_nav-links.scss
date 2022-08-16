@@ -27,5 +27,25 @@
     &:active {
       color: black;
     }
+    &.--active {
+      border-bottom: solid 2px #000;
+    }
+  }
+  
+}
+.nav-content {
+  display: flex;
+  gap: 40px;
+  
+  p {
+    font-weight: bold;
+    margin-bottom: 8px;
+  }
+  ul {
+    padding: 0 20px 0 0;
+    border-right: solid 1px #ccc;
+    li {
+      font-size: 14px;
+    }
   }
 }

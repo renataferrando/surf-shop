@@ -4,32 +4,33 @@ import ProductsLayout from "../components/productsLayout/ProductsLayout";
 import ProductCard from "../components/common/productCard/ProductCard";
 import Loading from "../components/common/loading/Loading";
 import Filters from "../components/filters/Filters";
-import "./_accesories.scss";
-import { getAccesories } from "../service/getAccesories";
 
-const Accesories = () => {
-  const [state, dispatch, searchParams] = useContext(ApiContext);
+import "./_accesories.scss";
+import { getWetsuits } from "../service/getWetsuits";
+
+const Wetsuits = () => {
+  const [state, dispatch] = useContext(ApiContext);
   const [noResults, setNoResults] = useState(false);
 
-  const { loading, accesories } = state;
+  const { loading, wetsuits, searchParams } = state;
   useEffect(() => {
-    const fetchAccesories = async () => {
-      const accesories = await getAccesories(searchParams);
-      dispatch({ type: "GET_ACCESORIES_SUCCESS", payload: accesories });
+    const fetchWetsuits = async () => {
+      const wetsuits = await getWetsuits();
+      dispatch({ type: "GET_WETSUITS_SUCCESS", payload: wetsuits });
     };
 
-    fetchAccesories();
-  }, [searchParams]);
+    fetchWetsuits();
+  }, []);
 
-  console.log(accesories);
+  console.log(wetsuits);
   return (
     <div className="accesories-page">
       <h1>Accesories</h1>
       <div className="wrapper">
-        <Filters data={accesories} />
+        <Filters data={wetsuits} />
         <div className="products">
           <ProductsLayout>
-            {loading && <Loading />}
+            {/* {loading && <Loading />} */}
             {noResults && (
               <div>
                 No results where found, try a diffrent search,{" "}
@@ -37,15 +38,15 @@ const Accesories = () => {
               </div>
             )}
             {state &&
-              accesories.map((data) => (
+              wetsuits.map((data) => (
                 <ProductCard
                   key={data._id}
                   title={data.name}
-                  firstImage={data.firstImage}
-                  secondImage={data.secondImageUrl}
+                  firstImage={data.firstImageUrl}
+                  //   secondImage={data.secondImageUrl}
                   price={data.price}
                   brand={data.brand}
-                  category={data.subcategory}
+                  //   category={data.subcategory}
                 />
               ))}
           </ProductsLayout>
@@ -55,4 +56,4 @@ const Accesories = () => {
   );
 };
 
-export default Accesories;
+export default Wetsuits;

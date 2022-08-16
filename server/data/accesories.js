@@ -11,8 +11,8 @@ accesories = [
     subcategory: "Leashes",
     description:
       "Our LITE leash is an ultra-lightweight leash specifically made for small waves. The 6ft Lite Leash with 5mm cord minimizes drag, ideal for fast and small wave surfing.",
-    firstImageUrl: "",
-    secondImageUrl: "",
+    firstImageUrl: "/images/leashes/creature/gromlite-5.jpg",
+    secondImageUrl: "/images/leashes/creature/gromlite-5b.jpg",
   },
   {
     name: "SUPER COMP 6",
@@ -24,8 +24,8 @@ accesories = [
     subcategory: "Leashes",
     description:
       "Our Comp 6 is a lightweight Leash for small to medium sized waves. The 6mm cord and 6ft long Comp Leash is perfect for a broad range of conditions and ideal for day-to-day use.",
-    firstImageUrl: "",
-    secondImageUrl: "",
+    firstImageUrl: "/images/leashes/creature/reliancepro-6.jpg",
+    secondImageUrl: "/images/leashes/creature/reliancepro-6b.jpg",
   },
   {
     name: "SUPER LITE PRO 7",

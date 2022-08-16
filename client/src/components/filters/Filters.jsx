@@ -1,19 +1,16 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import Checkmark from "../common/checkmark/Checkmark";
+import { useSearchParams } from "react-router-dom";
 import { ApiContext } from "../../context/apiContext";
+
 import "./_filters.scss";
 
 const Filters = ({ data }) => {
-  const [state, dispatch, searchParams, setSearchParams] =
-    useContext(ApiContext);
-
+  const [categoriesChecked, setCategoriesChecked] = useState([]);
   const [gender, setGender] = useState(false);
   const [subcategory, setSubcategory] = useState(false);
-  const [brands, setBrands] = useState([]);
-  const [disabledBrands, setDisabledBrands] = useState([]);
-  const [brandsChecked, setBrandsChecked] = useState([]);
-  const [disabledSubcategories, setDisabledSubcategories] = useState([]);
-  const [subcategoriesChecked, setSubcategoriesChecked] = useState([]);
+  const [state, dispatch, searchParams, setSearchParams] =
+    useContext(ApiContext);
 
   const isGender = data.map((item) => item.gender != undefined);
   const isSubcategory = data.map((item) => item.subcategory != undefined);
@@ -21,126 +18,91 @@ const Filters = ({ data }) => {
   useEffect(() => {
     setGender(isGender[0]);
     setSubcategory(isSubcategory[0]);
-    setBrands(
-      data
-        .map((item) => item.brand)
-        .reduce((acc, br) => (acc.includes(br) ? acc : [...acc, br]), [])
-    );
   }, [data]);
 
-  const subcategories = data
+  const productBrands = data
+    .map((item) => item.brand)
+    .reduce((acc, sub) => (acc.includes(sub) ? acc : [...acc, sub]), []);
+
+  const productSubcategory = data
     .map((item) => item.subcategory)
     .reduce((acc, sub) => (acc.includes(sub) ? acc : [...acc, sub]), []);
 
-  const handleBrandFilter = (e) => {
-    const { value, checked } = e.target;
-    if (checked) {
-      searchParams.append("brand", value);
-      setBrandsChecked(searchParams.getAll("brand"));
-    } else if (!checked) {
-      searchParams.delete("brand", value);
-      setBrandsChecked(searchParams.getAll("brand"));
+  const productGender = data
+    .map((item) => item.gender)
+    .reduce((acc, sub) => (acc.includes(sub) ? acc : [...acc, sub]), []);
+
+  const handlerFilter = (e) => {
+    resetState();
+    const { value, name } = e.target;
+
+    const currentCategoryChecked = value;
+    const allCategoriesChecked = [...categoriesChecked];
+    const indexFound = allCategoriesChecked.indexOf(currentCategoryChecked);
+
+    let updatedCategories;
+    if (indexFound === -1) {
+      searchParams.append(name, value);
+      setSearchParams(searchParams);
+      updatedCategories = [...categoriesChecked, currentCategoryChecked];
+      setCategoriesChecked(updatedCategories);
+    } else {
+      searchParams.delete(name, value);
+      setSearchParams(searchParams);
+      updatedCategories = [...categoriesChecked];
+      updatedCategories.splice(indexFound, 1);
+      setCategoriesChecked(updatedCategories);
     }
   };
 
-  const handleSubcategoryFilter = (e) => {
-    const { value, checked } = e.target;
-    if (checked) {
-      searchParams.append("subcategory", value);
-      setSubcategoriesChecked(searchParams.getAll("subcategory"));
-    } else if (!checked) {
-      searchParams.delete("subcategory", value);
-    }
-  };
-
-  useEffect(() => {
-    setBrandsChecked(searchParams.getAll("brand"));
-    setSubcategoriesChecked(searchParams.getAll("subcategory"));
-    setDisabledBrands(searchParams.getAll("brand"));
-    setDisabledSubcategories(searchParams.getAll("subcategory"));
-  }, [searchParams]);
-
-  const applyFilter = () => {
-    setSearchParams(searchParams);
-  };
-
-  const clearBrandFilter = () => {
-    searchParams.delete("brand");
-    setSearchParams(searchParams);
-  };
-  const clearSubcategoryFilters = () => {
-    searchParams.delete("subcategory");
-    setSearchParams(searchParams);
+  const resetState = () => {
+    setCategoriesChecked([]);
   };
 
   return (
     <div className="filters">
       <h4>Filters</h4>
-      <p>Sort by price</p>
-      <Checkmark
-        label="High to low"
-        onChange={() =>
-          dispatch({
-            type: "HIGH_TO_LOW",
-          })
-        }
-        checked={state.priceHighToLow}
-      />
-      <Checkmark
-        label="Low to High"
-        onChange={() =>
-          dispatch({
-            type: "LOW_TO_HIGH",
-          })
-        }
-        checked={state.priceLowToHigh}
-      />
       {gender && (
         <>
           <p>Gender</p>
-          <Checkmark label="Man" />
-          <Checkmark label="Woman" />
+          {productGender.map((item) => (
+            <Checkmark
+              key={item}
+              name="gender"
+              label={item}
+              value={item}
+              onChange={handlerFilter}
+              checked={categoriesChecked.includes(item)}
+            />
+          ))}
         </>
       )}
       <p>Brands</p>{" "}
-      {brands.map((item) => (
+      {productBrands.map((item) => (
         <Checkmark
           key={item}
           label={item}
-          name="filter"
+          name="brand"
           value={item}
-          checked={brandsChecked.includes(item)}
-          onChange={handleBrandFilter}
-          disabled={disabledBrands.includes(item)}
+          checked={searchParams.getAll("brand").includes(item)}
+          onChange={handlerFilter}
         />
       ))}
-      {disabledBrands.length != 0 && (
-        <span className="clear-btn" onClick={clearBrandFilter}>
-          Clear
-        </span>
-      )}
       {subcategory && (
         <>
-          <p>Subcategory</p>
-          {subcategories.map((item) => (
+          <p>Category</p>
+          {productSubcategory.map((item) => (
             <Checkmark
               key={item}
               label={item}
-              name="filter"
+              name="subcategory"
               value={item}
-              checked={subcategoriesChecked.includes(item)}
-              onChange={handleSubcategoryFilter}
-              disabled={disabledSubcategories.includes(item)}
+              checked={searchParams.getAll("subcategory").includes(item)}
+              onChange={handlerFilter}
             />
           ))}
-          {disabledSubcategories.length != 0 && (
-            <span className="clear-btn" onClick={clearSubcategoryFilters}>
-              Clear
-            </span>
-          )}
         </>
       )}
-      <button onClick={applyFilter}> Apply filters</button>
     </div>
   );
 };

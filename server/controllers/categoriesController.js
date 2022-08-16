@@ -8,21 +8,24 @@ const getAccesories = async (req, res) => {
   });
   res.json(accesories);
 };
-// const getBoards = asyncHandler(async (req, res) => {
-//   const accesoriesByBrand = await Product.find({
-//     category: "boards",
-//     brand: req.params.brand,
-//   });
-//   res.json(accesoriesByBrand);
-// });
 
-// const getWetsuits = asyncHandler(async (req, res) => {
-//   const wetsuits = await Product.find();
-//   res.json(wetsuits);
-// });
+const getWetsuits = asyncHandler(async (req, res) => {
+  const wetsuits = await Product.find({ category: "wetsuit" });
+  res.json(wetsuits);
+});
+const getFilteredAccesories = asyncHandler(async (req, res) => {
+  const filteredAccesories = await Product.find({ ...req.query });
+  res.json(filteredAccesories);
+});
+
+const getFilteredWetsuits = asyncHandler(async (req, res) => {
+  const filteredWetsuits = await Product.find({ ...req.query });
+  res.json(filteredWetsuits);
+});
 
 module.exports = {
   getAccesories,
-  // getWetsuits,
-  // getBoards,
+  getWetsuits,
+  getFilteredWetsuits,
+  getFilteredAccesories,
 };

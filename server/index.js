@@ -1,16 +1,19 @@
 const express = require("express");
 const PORT = process.env.PORT || 3001;
 const app = express();
+const cors = require("cors");
 const dotenv = require("dotenv");
 const userRoutes = require("./routes/usersRoutes");
 const productsRoutes = require("./routes/productsRoutes");
 const categoriesRoutes = require("./routes/categoriesRoutes");
-const filterRoutes = require("./routes/filterRoutes");
 const connectDB = require("./config/db");
 const { notFound, errorHandler } = require("./middlewares/errorHandler");
 
 dotenv.config();
 connectDB();
+
+app.use(cors());
+
 app.use(express.json());
 
 app.get("/", (req, res) => {
@@ -20,7 +23,6 @@ app.get("/", (req, res) => {
 app.use("/api/users", userRoutes);
 app.use("/api/products", productsRoutes);
 app.use("/api/categories", categoriesRoutes);
-app.use("/api/search", filterRoutes);
 
 app.use(notFound);
 app.use(errorHandler);

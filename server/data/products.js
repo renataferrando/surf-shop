@@ -6,7 +6,7 @@ products = [
     price: 229,
     size: [2, 4, 6],
     category: "wetsuit",
-    gender: "Woman",
+    gender: "woman",
     countInStock: 10,
     description:
       "Sustainability meets stretchable performance in the 4/3 Women's Furnace Natural Series Zipperless Full Wetsuit. 100% neoprene-free, this natural rubber women's wetsuit made from Yulex delivers all the warmth and flexibility you find in a premium wetsuit without the toxic chemicals. This eco and performance-minded wetsuit is backed by Recycler Airlite Stretch jersey lining featuring Ciclo technology, which helps close the loop and reduce plastic pollution in our oceans and landfills. Limitless stretch paves the way for a zipperless entry system for a smooth feel and extra flexibility. Sealed with water-based glues, the Furnace Natural Jacket is the most sustainably focused suit you'll wear.",
